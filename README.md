@@ -4,7 +4,7 @@ Builds on the PowerWise website from T01 (Home, Televisions, About Us). Over exe
 
 Run it with VS Code **Live Server** (Go Live). `d3.csv()` cannot load the CSV when `index.html` is opened by double-clicking.
 
-**Live demo:** _add the Vercel link for this repo here_
+**Live demo:** [https://cos30045-t04-7-azure.vercel.app/](https://cos30045-t04-7-azure.vercel.app/)
 
 ## Structure
 
@@ -180,9 +180,10 @@ Things I noticed:
 
 <!-- Write a short reflection: how helpful was the tool, what did it get wrong, what did you learn? -->
 I am able to understand the codes that I pasted with the help of GenAI. I prompted it to summarised what have been done and why included that line of codes. The explanation help me in a way that I can learn while did it.
-In short of what done on T04-2: the HTML provides the elements, the D3 library provides the tools, and JS file uses those tools on those elements, loaded in that order at the end of the page.
-In short of what done on T04-3:
-In short of what done on T04-4:
-In short of what done on T04-5:
-In short of what done on T04-6:
-In short of what done on T04-7:
+
+- In short of what done on T04-2: the HTML provides the elements, the D3 library provides the tools, and JS file uses those tools on those elements, loaded in that order at the end of the page.
+- In short of what done on T04-3: a responsive container holds an SVG whose viewBox gives it its own coordinate system, so the drawing grows and shrinks with the window but keeps its proportions.
+- In short of what done on T04-4: `d3.csv()` loads my KNIME CSV, the row function renames the columns and turns the counts from text into numbers, and the console checks (rows, max, min, extent) confirm the data is right before anything is drawn.
+- In short of what done on T04-5: the data join (`selectAll` → `data` → `join`) creates one `<rect>` per row and each bar's width comes from its own count, but without x and y positions the bars all sit on top of each other.
+- In short of what done on T04-6: scales turn data into positions; `scaleLinear` turns counts into bar lengths that always fit the SVG, and `scaleBand` gives each brand its own evenly spaced row.
+- In short of what done on T04-7: each brand's bar and labels are put in one `<g>` group and moved into place with `translate`, so they stay together; the brand name ends where the bar starts and the count sits at the end of the bar.
