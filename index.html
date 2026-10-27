@@ -12,41 +12,20 @@
     <!-- Navigation menu is added here by js/script.js -->
     <header id="site-header"></header>
 
+    <!-- Exactly one h1, one div and one svg for D3 to work with -->
     <main>
-        <h1>Understanding Appliance Energy Use in Australia</h1>
-        <p class="intro">
-            Household appliances account for a large share of electricity use in Australian homes.
-            Choosing efficient appliances can lower power bills and reduce greenhouse gas emissions.
-        </p>
-
-        <div class="cards">
-            <article class="card">
-                <h2>Energy Rating Label</h2>
-                <p>
-                    Many appliances sold in Australia must display the Energy Rating Label. More stars
-                    means a more efficient appliance, and the label shows estimated annual energy use in kWh.
-                </p>
-            </article>
-            <article class="card">
-                <h2>Where the Power Goes</h2>
-                <p>
-                    Heating and cooling, water heating, refrigeration and home entertainment are
-                    among the biggest users of electricity in a typical household.
-                </p>
-            </article>
-            <article class="card">
-                <h2>Standby Power</h2>
-                <p>
-                    Devices left on standby still draw power. Switching off at the wall can make a
-                    small but steady difference to your yearly energy bill.
-                </p>
-            </article>
-        </div>
+        <h1>Appliance Energy Consumption</h1>
+        <div id="content"></div>
+        <!-- Give the SVG a size so shapes can be seen -->
+        <svg width="300" height="150"></svg>
     </main>
 
     <!-- Footer is added here by js/script.js -->
     <footer id="site-footer"></footer>
 
     <script src="js/script.js"></script>
+    <!-- Load D3 first, then your D3 code file -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/energy-d3.js"></script>
 </body>
 </html>

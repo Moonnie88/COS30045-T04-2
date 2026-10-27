@@ -1,22 +1,40 @@
-# COS30045 – Lab Exercise: PowerWise Website
+# COS30045 – T04-2: Manipulate and Add Elements with D3
 
-A three-page website (Home, Televisions, About Us) with placeholder content about appliance energy consumption in the Australian market.
+Builds on the PowerWise website from T01 (Home, Televisions, About Us). In this exercise the Home page is reset to a simple `<h1>`, `<div>` and `<svg>`, and a separate JavaScript file uses D3 to style, add HTML and draw an SVG shape.
 
-**Live demo:** [https://cos-30045-nine.vercel.app/](https://cos-30045-nine.vercel.app/)
+**Live demo:** _add the Vercel link for this repo here_
 
 ## Structure
 
 ```
-index.html        – Home page
+index.html        – Home page: h1, div#content and svg for D3 to work with
 televisions.html  – Televisions page (KNIME charts)
 about.html        – About Us page
 css/styles.css    – styling, colours taken from the power logo
 js/script.js      – builds the shared nav menu and footer, highlights the current page, switches chart views
+js/energy-d3.js   – D3 code for T04-2 (only D3 lives in this file)
 images/PowerIcon.png
 images/charts/    – KNIME charts answering the 7 TV questions
 ```
 
-## Features
+## T04-2: what the D3 code does
+
+D3 v7 is loaded from `https://d3js.org/d3.v7.min.js`, then `js/energy-d3.js` runs. Both script tags sit just before `</body>`, so the elements already exist when D3 selects them.
+
+| Code | Result on the page |
+|------|--------------------|
+| `d3.select("h1").style("color", "green")` | Selects the first `<h1>` and adds an inline style, so the heading turns green. |
+| `d3.select("div").append("p").text("…")` | Selects the first `<div>` (`#content`), adds a new `<p>` inside it and sets its text. |
+| `d3.select("svg").append("rect")` | Adds an empty `<rect>` to the SVG. It has no size or fill, so it is invisible but can be seen in DevTools. |
+| `d3.select("svg").append("rect").attr(…).style("fill", "green")` | Adds a second `<rect>` at x=50, y=50, 100 wide and 30 high, filled green, so it shows up. |
+
+Things I noticed:
+
+- `d3.select()` only picks the first match. The old Home page cards used a `<div>`, so the page had to be reset to exactly one `<h1>`, one `<div>` and one `<svg>` for the paragraph to land in the right place. The nav built by `script.js` has no `<div>`, so `#content` is the first one.
+- `.attr()` sets SVG attributes (`x`, `y`, `width`, `height`), while `.style()` sets CSS (`fill`, `color`).
+- Each `.append()` adds a new element, so selecting the SVG twice and appending each time gives two `<rect>`s.
+
+## Features (from T01)
 
 - JavaScript navigation: `script.js` builds the menu from a list of pages, so every page shares the same menu and footer.
 - Power logo in the top-left returns to the Home page.
@@ -32,11 +50,10 @@ images/charts/    – KNIME charts answering the 7 TV questions
 
 | Date          | Tool        | What I asked for                 | What I changed / checked       |
 |---------------|-------------|----------------------------------|--------------------------------|
-|23/9/2026      | Claude Code | - help me code and understand it | - checks/change for preference |
+|27/10/2026     | Claude Code | - T04-2: reset the Home page body, link D3 and add `energy-d3.js` with the given code; explain each block | - checked the green heading, new paragraph and two `<rect>`s in the browser and DevTools |
 
 ### Reflection
 
 <!-- Write a short reflection: how helpful was the tool, what did it get wrong, what did you learn? -->
-Having claude to help me code out the website is faster and it gives me what I imagined.
-Claude code misunderstood the idea of "provides mouse over feedback to user", what I want is something where user hover their mouse it show text like a tooltip but claude thought that user hover to it and it change the display (eg: the text turn brown with different background). Claude also put the pages together in .html instead of having the separately.
-I have learnt new things like some new coding ways and there is symbol codes like &copy; and &middot; which help so much instead of using the symbol by paste it.
+I am able to understand the codes that I pasted with the help of GenAI. I prompted it to summarised what have been done and why included that line of codes. The explanation help me in a way that I can learn while did it.
+In short of what done: the HTML provides the elements, the D3 library provides the tools, and JS file uses those tools on those elements, loaded in that order at the end of the page.
