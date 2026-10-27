@@ -2,10 +2,7 @@
 // "Brand_Reg" and "Count(Model_No)" instead of "brand" and "count".
 // "Count(Model_No)" has brackets in it, so it must be read with d["..."], not d.Count(Model_No).
 
-/* Stub: will draw the chart in T04-5 */
-function createBarChart(data) {
-  console.log("createBarChart received", data.length, "rows");
-}
+// createBarChart(data) is defined in t04-5-bars.js (the T04-4 stub has been removed)
 
 /* Load CSV, Convert Type, Quick Check */
 d3.csv("data/tvBrandCount.csv", d => ({
@@ -22,6 +19,6 @@ d3.csv("data/tvBrandCount.csv", d => ({
   // Optional: sort for easier reading (descending by count)
   data.sort((a, b) => d3.descending(a.count, b.count));
 
-  // Hand off to the chart builder (implemented next exercise)
+  // Hand off to the chart builder (in t04-5-bars.js)
   createBarChart(data);
 });

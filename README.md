@@ -16,7 +16,8 @@ css/styles.css        – styling, colours taken from the power logo; .responsiv
 js/script.js          – builds the shared nav menu and footer, highlights the current page, switches chart views
 js/energy-d3.js       – T04-2: style h1, append paragraph, add SVG rects (now disabled)
 js/t04-3-bars.js      – T04-3: responsive SVG with a test rect (now disabled)
-js/t04-4-load.js      – T04-4: load the CSV, convert types, console checks
+js/t04-4-load.js      – T04-4: load the CSV, convert types, console checks, then call createBarChart(data)
+js/t04-5-bars.js      – T04-5: createBarChart(data) binds each row to a <rect> (width = count)
 data/tvBrandCount.csv – number of TV models for the top 10 brands, exported from my KNIME workspace
 images/PowerIcon.png
 images/charts/        – KNIME charts answering the 7 TV questions
@@ -69,7 +70,29 @@ The top 10 brands range from 101 models (EKO) to 809 (KOGAN). SAMSUNG and SAMSUN
 - `d3.csv("data/tvBrandCount.csv", row => …)` loads the file. The path is relative to `index.html`.
 - The row function renames the columns to `brand` and `count` and converts `count` to a number with `+`. My headers differ from the exercise's `brand`/`count`, so the code reads `d.Brand_Reg` and `d["Count(Model_No)"]`. Brackets are needed for the second one because of the `(` `)` in the name.
 - `.then(data => …)` runs once the whole file has loaded. It logs the array, `rows: 10`, `max: 809`, `min: 101` and `extent: [101, 809]`, sorts the rows by count (largest first), and passes them to `createBarChart(data)`.
-- `createBarChart()` is only a stub for now (it logs "createBarChart received 10 rows"); it draws the bars in T04-5.
+- `createBarChart()` was only a stub in T04-4 (it logged "createBarChart received 10 rows"). In T04-5 the stub was removed and the real function now lives in `t04-5-bars.js`.
+
+## T04-5: bind data and draw bars
+
+`index.html` loads `t04-4-load.js` and then `t04-5-bars.js`. This order works even though the loader calls `createBarChart()`: `d3.csv()` takes a moment to fetch the file, and by the time `.then()` runs, `t04-5-bars.js` has already defined the function.
+
+`createBarChart(data)` in `t04-5-bars.js`:
+
+| Code | What it does |
+|------|--------------|
+| `d3.select(".responsive-svg-container").append("svg")` | Adds a new SVG canvas, `viewBox="0 0 1200 400"`, with a temporary black border. |
+| `.selectAll("rect").data(data).join("rect")` | The data join. `selectAll` finds no `<rect>`s yet, `.data(data)` pairs the 10 rows with them, and `.join("rect")` creates one `<rect>` for each row. |
+| `` .attr("class", d => `bar bar-${d.count}`) `` | Gives each bar a class from its own data, e.g. `bar bar-809`, which makes it easy to spot in DevTools. |
+| `.attr("width", d => d.count)` | Bar length = number of models, so KOGAN's bar is 809 units wide. |
+| `.attr("height", 16)` | Every bar is the same thickness. |
+
+Result: 10 `<rect>`s in the DOM, but they are all drawn at x=0, y=0 on top of each other, so only the longest (KOGAN, 809) can be seen. This is the expected end point for T04-5.
+
+Things I noticed:
+
+- `d => …` is a function D3 calls once per bar, passing in that bar's row. That is how each `<rect>` gets a different width from the same line of code.
+- Using `count` directly as the width only works because 809 happens to fit inside the 1200-wide viewBox. A brand with more than 1200 models would run off the edge. T04-6 fixes this with a scale.
+- To space the bars out, each bar needs a `y` based on its position in the data (its index `i`), e.g. `y = i * (barHeight + gap)`. This is done in T04-6.
 
 ## Features (from T01)
 
@@ -90,6 +113,7 @@ The top 10 brands range from 101 models (EKO) to 809 (KOGAN). SAMSUNG and SAMSUN
 |27/10/2026     | Claude Code | - T04-2: reset the Home page body, link D3 and add `energy-d3.js` with the given code; explain each block | - checked the green heading, new paragraph and two `<rect>`s in the browser and DevTools |
 |27/10/2026     | Claude Code | - T04-3: add the responsive container, CSS class and `t04-3-bars.js`; explain `viewBox` | - checked the canvas and blue bar scale when the window is resized |
 |27/10/2026     | Claude Code | - T04-4: load my own KNIME CSV, match the code to my column names, add console checks | - checked the console shows 10 rows, max 809, min 101 and the stub message |
+|27/10/2026     | Claude Code | - T04-5: remove the stub, add `t04-5-bars.js` to bind the data to `<rect>`s; explain the data join | - checked DevTools shows 10 `<rect>`s with classes like `bar bar-809` and the right widths |
 
 ### Reflection
 
