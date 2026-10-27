@@ -18,14 +18,20 @@
         <div id="content"></div>
         <!-- Give the SVG a size so shapes can be seen -->
         <svg width="300" height="150"></svg>
+
+        <!-- NEW: Container for T04-3 chart -->
+        <div class="responsive-svg-container"></div>
     </main>
 
     <!-- Footer is added here by js/script.js -->
     <footer id="site-footer"></footer>
 
     <script src="js/script.js"></script>
-    <!-- Load D3 first, then your D3 code file -->
+    <!-- D3 library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="js/energy-d3.js"></script>
+    <!-- NEW: JS for T04-3 only -->
+    <script src="js/t04-3-bars.js"></script>
+    <!-- Old T04-2 demo (temporarily disabled) -->
+    <!-- <script src="js/energy-d3.js"></script> -->
 </body>
 </html>

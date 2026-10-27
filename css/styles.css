@@ -110,6 +110,13 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* T04-3: SVG container that resizes with the window */
+.responsive-svg-container {
+    margin: 0 auto;     /* center */
+    width: 100%;        /* fill parent width */
+    max-width: 1200px;  /* cap max width */
+}
+
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
