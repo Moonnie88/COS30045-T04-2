@@ -121,6 +121,27 @@ h2 {
 .responsive-svg-container svg {
     max-width: 100%;
     height: auto;
+    background-color: var(--white);
+    border: 1px solid var(--cream);
+    border-radius: 8px;
+}
+
+/* Bar chart colours from the logo palette (bars and labels are drawn by D3) */
+.responsive-svg-container .bar {
+    fill: var(--brown);
+}
+
+.responsive-svg-container text {
+    fill: var(--brown-dark);
+}
+
+.chart-block h2 {
+    margin-top: 0;
+}
+
+.chart-source {
+    font-size: 0.85rem;
+    margin-top: 8px;
 }
 
 .cards {

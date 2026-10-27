@@ -12,15 +12,22 @@
     <!-- Navigation menu is added here by js/script.js -->
     <header id="site-header"></header>
 
-    <!-- Exactly one h1, one div and one svg for D3 to work with -->
     <main>
         <h1>Appliance Energy Consumption</h1>
-        <div id="content"></div>
-        <!-- Give the SVG a size so shapes can be seen -->
-        <svg width="300" height="150"></svg>
+        <p class="intro">
+            Which brands offer the most TV models in Australia? The chart counts the TV models
+            registered under the Energy Rating scheme for the 10 brands with the most models.
+        </p>
 
-        <!-- NEW: Container for T04-3 chart -->
-        <div class="responsive-svg-container"></div>
+        <!-- T04 bar chart: D3 draws the SVG inside this container (js/t04-5-bars.js) -->
+        <section class="chart-block">
+            <h2>Top 10 TV brands by number of registered models</h2>
+            <div class="responsive-svg-container"></div>
+            <p class="chart-source">
+                Source: Energy Rating TV data (DCCEEW, data.gov.au, CC BY 3.0 AU), downloaded 6 Sept 2026.
+                SAMSUNG and SAMSUNG ELECTRONICS are registered as separate brand names.
+            </p>
+        </section>
     </main>
 
     <!-- Footer is added here by js/script.js -->

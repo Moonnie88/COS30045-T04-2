@@ -9,7 +9,7 @@ Run it with VS Code **Live Server** (Go Live). `d3.csv()` cannot load the CSV wh
 ## Structure
 
 ```
-index.html            – Home page: h1, div#content, svg (T04-2) and .responsive-svg-container (T04-3+)
+index.html            – Home page: intro, chart title, .responsive-svg-container for the D3 bar chart, data source
 televisions.html      – Televisions page (KNIME charts)
 about.html            – About Us page
 css/styles.css        – styling, colours taken from the power logo; .responsive-svg-container
@@ -146,6 +146,12 @@ Things I noticed:
 - Grouping is the same idea as the windows in T04-1: move the group once with `translate`, and everything inside moves with it.
 - `text-anchor="end"` makes x the **end** of the text, which is what lets brand names of different lengths all line up against the bars.
 
+### Tidy-up for submission
+
+- Removed the leftover T04-2 `<div id="content">` and empty `<svg>` from `index.html`, which left a blank gap above the chart. (`energy-d3.js` is still in the repo, commented out.)
+- Added a short intro, a chart title ("Top 10 TV brands by number of registered models") and a source note under the chart, which also explains the two Samsung bars.
+- Bar and label colours now come from the site's logo palette in `css/styles.css` (`.bar` uses `--brown`, labels use `--brown-dark`) instead of `steelblue` in the JS. The chart sits on a white card with a rounded cream border.
+
 ## Features (from T01)
 
 - JavaScript navigation: `script.js` builds the menu from a list of pages, so every page shares the same menu and footer.
@@ -168,6 +174,7 @@ Things I noticed:
 |27/10/2026     | Claude Code | - T04-5: remove the stub, add `t04-5-bars.js` to bind the data to `<rect>`s; explain the data join | - checked DevTools shows 10 `<rect>`s with classes like `bar bar-809` and the right widths |
 |27/10/2026     | Claude Code | - T04-6: add the viewBox/display size and the x (linear) and y (band) scales; explain why the chart sits in the middle of the box | - checked the bar positions and widths in DevTools against the scale maths |
 |27/10/2026     | Claude Code | - T04-7: group each bar with its labels; fix the cut-off "809", the long brand label and the label alignment | - checked the chart on a wide and a narrow window; all 10 labels and values show |
+|27/10/2026     | Claude Code | - tidy the Home page for submission: remove the T04-2 leftovers, add a title, intro and source, use the site colours | - checked the page on a wide and a narrow window |
 
 ### Reflection
 

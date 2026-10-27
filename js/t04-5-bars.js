@@ -21,8 +21,8 @@ const createBarChart = (data) => {
     .append("svg")
     .attr("viewBox", `0 0 ${viewW} ${viewH}`)
     .attr("width", displayW)
-    .attr("height", displayH)
-    .style("border", "1px solid #ccc");
+    .attr("height", displayH);
+  // Border, background and colours now come from css/styles.css (.responsive-svg-container)
 
   // --- Scales (from T04-6) ---
   const xMax = d3.max(data, d => d.count);
@@ -63,8 +63,8 @@ const createBarChart = (data) => {
     .attr("x", labelX)                         // bars start where the brand labels end
     .attr("y", 0)
     .attr("width", d => xScale(d.count))       // scaled width fits the viewBox
-    .attr("height", yScale.bandwidth())        // bar thickness from band scale
-    .attr("fill", "steelblue");
+    .attr("height", yScale.bandwidth());       // bar thickness from band scale
+    // Bar colour is set in css/styles.css (.bar) to match the site's logo palette
 
   // CHANGED: both labels use the middle of the bar for y, with dominant-baseline "middle",
   // instead of fixed y values (15 and 12), so they line up with the bar and with each other.
