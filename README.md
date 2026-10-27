@@ -17,7 +17,7 @@ js/script.js          – builds the shared nav menu and footer, highlights the 
 js/energy-d3.js       – T04-2: style h1, append paragraph, add SVG rects (now disabled)
 js/t04-3-bars.js      – T04-3: responsive SVG with a test rect (now disabled)
 js/t04-4-load.js      – T04-4: load the CSV, convert types, console checks, then call createBarChart(data)
-js/t04-5-bars.js      – T04-5: createBarChart(data) binds each row to a <rect> (width = count)
+js/t04-5-bars.js      – T04-5/T04-6: createBarChart(data) binds each row to a <rect>; T04-6 adds x/y scales
 data/tvBrandCount.csv – number of TV models for the top 10 brands, exported from my KNIME workspace
 images/PowerIcon.png
 images/charts/        – KNIME charts answering the 7 TV questions
@@ -94,6 +94,27 @@ Things I noticed:
 - Using `count` directly as the width only works because 809 happens to fit inside the 1200-wide viewBox. A brand with more than 1200 models would run off the edge. T04-6 fixes this with a scale.
 - To space the bars out, each bar needs a `y` based on its position in the data (its index `i`), e.g. `y = i * (barHeight + gap)`. This is done in T04-6.
 
+## T04-6: scaling charts
+
+T04-6 edits `createBarChart` in `t04-5-bars.js` (no new file). Scales map **data values (domain)** to **positions on the canvas (range)**, so the bars always fit no matter how big the numbers are.
+
+| Setting | Value | Meaning |
+|---------|-------|---------|
+| `viewBox` | `0 0 500 1600` | The drawing's own coordinate system: 500 units wide, 1600 tall |
+| `width` / `height` | 640 × 420 | How big the SVG box is on the page |
+| `xScale` | `scaleLinear`, domain `[0, 809]` → range `[0, 500]` | Turns a model count into a bar length. The biggest brand (KOGAN, 809) gets the full 500. |
+| `yScale` | `scaleBand`, domain = the 10 brand names → range `[0, 1600]` | Splits the height into 10 equal slots, one per brand, and gives each bar its `y` |
+| `paddingInner(0.2)` / `paddingOuter(0.1)` | | Gap between bars (20% of a slot) and a small gap above the first and below the last bar |
+| `yScale.bandwidth()` | 128 | The bar thickness left after the padding |
+
+Checked in DevTools: each slot is 1600 ÷ 10 = 160 units, the bars are 128 thick, and they start at y = 16, 176, 336 … (160 apart). LG's width is 723 ÷ 809 × 500 ≈ 446.8.
+
+Things I noticed:
+
+- `scaleLinear` is for numbers (a continuous range), while `scaleBand` is for categories (a fixed list of names, each getting its own band).
+- `data.map(d => d.brand)` builds the list of brand names for the band scale. The bars stay in the sorted order from T04-4, largest first.
+- The chart is drawn in the **middle of the box with empty space either side**. The viewBox is tall and narrow (500 × 1600, about 1 : 3.2) but the box is wide (640 × 420, about 1.5 : 1). The browser keeps the drawing's proportions, so it shrinks the whole drawing until the 1600 height fits into 420 and centres it. Making the two shapes match (e.g. a viewBox of `0 0 640 420`) would let the chart fill the box.
+
 ## Features (from T01)
 
 - JavaScript navigation: `script.js` builds the menu from a list of pages, so every page shares the same menu and footer.
@@ -114,6 +135,7 @@ Things I noticed:
 |27/10/2026     | Claude Code | - T04-3: add the responsive container, CSS class and `t04-3-bars.js`; explain `viewBox` | - checked the canvas and blue bar scale when the window is resized |
 |27/10/2026     | Claude Code | - T04-4: load my own KNIME CSV, match the code to my column names, add console checks | - checked the console shows 10 rows, max 809, min 101 and the stub message |
 |27/10/2026     | Claude Code | - T04-5: remove the stub, add `t04-5-bars.js` to bind the data to `<rect>`s; explain the data join | - checked DevTools shows 10 `<rect>`s with classes like `bar bar-809` and the right widths |
+|27/10/2026     | Claude Code | - T04-6: add the viewBox/display size and the x (linear) and y (band) scales; explain why the chart sits in the middle of the box | - checked the bar positions and widths in DevTools against the scale maths |
 
 ### Reflection
 
