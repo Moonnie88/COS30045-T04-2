@@ -17,7 +17,7 @@ js/script.js          – builds the shared nav menu and footer, highlights the 
 js/energy-d3.js       – T04-2: style h1, append paragraph, add SVG rects (now disabled)
 js/t04-3-bars.js      – T04-3: responsive SVG with a test rect (now disabled)
 js/t04-4-load.js      – T04-4: load the CSV, convert types, console checks, then call createBarChart(data)
-js/t04-5-bars.js      – T04-5/T04-6: createBarChart(data) binds each row to a <rect>; T04-6 adds x/y scales
+js/t04-5-bars.js      – createBarChart(data): T04-5 binds rows to <rect>s, T04-6 adds scales, T04-7 groups each bar with its labels
 data/tvBrandCount.csv – number of TV models for the top 10 brands, exported from my KNIME workspace
 images/PowerIcon.png
 images/charts/        – KNIME charts answering the 7 TV questions
@@ -113,7 +113,38 @@ Things I noticed:
 
 - `scaleLinear` is for numbers (a continuous range), while `scaleBand` is for categories (a fixed list of names, each getting its own band).
 - `data.map(d => d.brand)` builds the list of brand names for the band scale. The bars stay in the sorted order from T04-4, largest first.
-- The chart is drawn in the **middle of the box with empty space either side**. The viewBox is tall and narrow (500 × 1600, about 1 : 3.2) but the box is wide (640 × 420, about 1.5 : 1). The browser keeps the drawing's proportions, so it shrinks the whole drawing until the 1600 height fits into 420 and centres it. Making the two shapes match (e.g. a viewBox of `0 0 640 420`) would let the chart fill the box.
+- The chart is drawn in the **middle of the box with empty space either side**. The viewBox is tall and narrow (500 × 1600, about 1 : 3.2) but the box is wide (640 × 420, about 1.5 : 1). The browser keeps the drawing's proportions, so it shrinks the whole drawing until the 1600 height fits into 420 and centres it. Making the two shapes match (e.g. a viewBox of `0 0 640 420`) would let the chart fill the box. This is fixed in T04-7.
+
+## T04-7: adding labels (final chart)
+
+The finished chart on the Home page: the top 10 TV brands by number of registered models, with the brand name to the left of each bar and the count at the end of it.
+
+`createBarChart` in `t04-5-bars.js` now draws **one `<g>` group per brand**, holding its bar and both labels:
+
+| Code | What it does |
+|------|--------------|
+| `svg.selectAll("g").data(data).join("g")` | One group per row of data |
+| `` .attr("transform", d => `translate(0, ${yScale(d.brand)})`) `` | Moves the whole group down to that brand's band, so everything inside uses `y = 0` |
+| `.append("rect")` | The bar, starting at `x = labelX` |
+| `.append("text").text(d => d.brand)` | Brand label, `text-anchor="end"` so it ends just before the bar |
+| `.append("text").text(d => d.count)` | Value label, placed 4 units past the end of the bar |
+
+The T04-6 block that drew bare `<rect>`s is kept in the file, commented out, as the exercise asks.
+
+### Changes from the exercise's full code
+
+The exercise's code worked, but with my data three things went wrong, so I changed it (each change is marked `CHANGED` in the code):
+
+1. **KOGAN's value "809" was cut off.** The bars started at x = 100, but the x scale still ran from 0 to the full width (500), so the longest bar ended at 600, past the edge. Now the width is split into label space, bars and value space, and the x scale's range is only the middle part: `[0, viewW - labelX - valueSpace]`.
+2. **"SAMSUNG ELECTRONICS" didn't fit in 100 units.** The label space is now `labelX = 170`.
+3. **The labels didn't line up.** The brand used `y = 15` and the value `y = 12`. Both now use the middle of the bar (`yScale.bandwidth() / 2`) with `dominant-baseline: middle`, so they are centred on the bar and level with each other.
+
+I also made the viewBox and the display size the same shape (640 × 280), so the chart fills its box instead of being shrunk and centred (the T04-6 problem). In `css/styles.css`, `.responsive-svg-container svg { max-width: 100%; height: auto; }` lets it shrink on a phone screen while keeping its shape.
+
+Things I noticed:
+
+- Grouping is the same idea as the windows in T04-1: move the group once with `translate`, and everything inside moves with it.
+- `text-anchor="end"` makes x the **end** of the text, which is what lets brand names of different lengths all line up against the bars.
 
 ## Features (from T01)
 
@@ -136,9 +167,15 @@ Things I noticed:
 |27/10/2026     | Claude Code | - T04-4: load my own KNIME CSV, match the code to my column names, add console checks | - checked the console shows 10 rows, max 809, min 101 and the stub message |
 |27/10/2026     | Claude Code | - T04-5: remove the stub, add `t04-5-bars.js` to bind the data to `<rect>`s; explain the data join | - checked DevTools shows 10 `<rect>`s with classes like `bar bar-809` and the right widths |
 |27/10/2026     | Claude Code | - T04-6: add the viewBox/display size and the x (linear) and y (band) scales; explain why the chart sits in the middle of the box | - checked the bar positions and widths in DevTools against the scale maths |
+|27/10/2026     | Claude Code | - T04-7: group each bar with its labels; fix the cut-off "809", the long brand label and the label alignment | - checked the chart on a wide and a narrow window; all 10 labels and values show |
 
 ### Reflection
 
 <!-- Write a short reflection: how helpful was the tool, what did it get wrong, what did you learn? -->
 I am able to understand the codes that I pasted with the help of GenAI. I prompted it to summarised what have been done and why included that line of codes. The explanation help me in a way that I can learn while did it.
 In short of what done on T04-2: the HTML provides the elements, the D3 library provides the tools, and JS file uses those tools on those elements, loaded in that order at the end of the page.
+In short of what done on T04-3:
+In short of what done on T04-4:
+In short of what done on T04-5:
+In short of what done on T04-6:
+In short of what done on T04-7:
