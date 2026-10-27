@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerWise | Televisions</title>
+    <link rel="icon" href="images/PowerIcon.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="televisions">
+
+    <!-- Navigation menu is added here by js/script.js -->
+    <header id="site-header"></header>
+
+    <main>
+        <h1>Television Energy Consumption</h1>
+        <p class="intro">
+            Televisions are one of the most common appliances in Australian homes. The charts below
+            explore the TV models registered in Australia by screen technology, size, brand, star rating
+            and power use. Where a chart has tabs, click them to switch between views.
+        </p>
+
+        <!-- Q1: two views, switched with tabs -->
+        <article class="chart">
+            <h2>1. What TV screen technologies are available, and which are most frequent?</h2>
+            <div class="chart-tabs" role="tablist">
+                <button class="tab active" data-view="pie" role="tab" aria-selected="true"
+                        data-tooltip="Share of models by technology">Pie chart</button>
+                <button class="tab" data-view="bar" role="tab" aria-selected="false"
+                        data-tooltip="Number of models by technology">Bar chart</button>
+            </div>
+            <figure>
+                <img class="chart-view active" data-view="pie" src="images/charts/q1-screen-tech-pie.png"
+                     alt="Pie chart of TV models by screen technology: LCD (LED) 3797, LCD 484, OLED 292">
+                <img class="chart-view" data-view="bar" src="images/charts/q1-screen-tech-barchart.png"
+                     alt="Bar chart of TV models by screen technology: LCD (LED) 3797, LCD 484, OLED 292">
+                <figcaption>
+                    Three technologies are available: LCD (LED), LCD and OLED. LCD (LED) is by far the most
+                    frequent with 3,797 models, compared with 484 LCD and 292 OLED models.
+                </figcaption>
+            </figure>
+        </article>
+
+        <article class="chart">
+            <h2>2. What screen sizes are available, and which are most frequent?</h2>
+            <figure>
+                <img src="images/charts/q2-screen-sizes.png"
+                     alt="Bar chart of the number of TV models for each screen size in inches">
+                <figcaption>
+                    Sizes range from under 20 to over 110 inches. The most frequent are 65" and 55"
+                    (around 770 models each), followed by 75" (around 630) and 85" (around 350).
+                </figcaption>
+            </figure>
+        </article>
+
+        <article class="chart">
+            <h2>3. Which brands have the largest number of models?</h2>
+            <figure>
+                <img src="images/charts/q3-brand-models.png"
+                     alt="Bar chart of the ten brands with the most TV models, led by Kogan with 809">
+                <figcaption>
+                    Kogan has the most models (809), followed by LG (723) and Samsung Electronics (699).
+                    Samsung also appears separately with 497 models, so combined it would rank first.
+                </figcaption>
+            </figure>
+        </article>
+
+        <article class="chart">
+            <h2>4. Which screen technology consumes the least power?</h2>
+            <figure>
+                <img src="images/charts/q4-tech-power.png"
+                     alt="Bar chart of median average on-mode power by screen technology: LCD 71.35, LCD (LED) 106, OLED 112.70">
+                <figcaption>
+                    LCD has the lowest median power use (71.35&nbsp;W), followed by LCD (LED) at 106&nbsp;W.
+                    OLED uses the most at 112.70&nbsp;W.
+                </figcaption>
+            </figure>
+        </article>
+
+        <article class="chart">
+            <h2>5. What is the relationship between screen size and power use?</h2>
+            <figure>
+                <img src="images/charts/q5-size-vs-power.png"
+                     alt="Scatter plot of screen size in inches against average on-mode power">
+                <figcaption>
+                    There is a clear positive relationship: larger screens use more power. The spread in
+                    power use also widens as screen size increases.
+                </figcaption>
+            </figure>
+        </article>
+
+        <article class="chart">
+            <h2>6. What is the relationship between star rating and screen size?</h2>
+            <figure>
+                <img src="images/charts/q6-rating-vs-size.png"
+                     alt="Scatter plot of screen size in inches against star rating index">
+                <figcaption>
+                    There is no strong relationship. Star ratings vary widely (roughly 1 to 9) at every
+                    screen size, so a bigger TV is not necessarily less efficient for its size.
+                </figcaption>
+            </figure>
+        </article>
+
+        <!-- Q7: two views, switched with tabs -->
+        <article class="chart">
+            <h2>7. Are there differences in power consumption between brands?</h2>
+            <div class="chart-tabs" role="tablist">
+                <button class="tab active" data-view="box" role="tab" aria-selected="true"
+                        data-tooltip="Spread of power use within each brand">Box plot (all brands)</button>
+                <button class="tab" data-view="bar" role="tab" aria-selected="false"
+                        data-tooltip="10 brands with the highest average power">Bar chart (top 10)</button>
+            </div>
+            <figure>
+                <img class="chart-view active" data-view="box" src="images/charts/q7-brand-power-box.png"
+                     alt="Box plot of average on-mode power for each brand">
+                <img class="chart-view" data-view="bar" src="images/charts/q7-brand-power-bar.png"
+                     alt="Bar chart of the ten brands with the highest average power, led by Spark Electronics at 233.45">
+                <figcaption>
+                    Yes. The box plot shows power use varies a lot between brands and within each brand.
+                    Spark Electronics has the highest average power (233.45&nbsp;W), well above the other
+                    top-10 brands, which range from about 130 to 182&nbsp;W.
+                </figcaption>
+            </figure>
+        </article>
+    </main>
+
+    <!-- Footer is added here by js/script.js -->
+    <footer id="site-footer"></footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
